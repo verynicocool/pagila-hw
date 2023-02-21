@@ -6,7 +6,7 @@
  */
 SELECT
     country,
-    sum(amount) as "profit"
+    SUM(amount) as "profit"
 FROM country
 JOIN city USING (country_id)
 JOIN address USING (city_id)
