@@ -4,7 +4,16 @@
  */
 CREATE OR REPLACE FUNCTION category_counts_by_language(TEXT) RETURNS TABLE(name TEXT, count BIGINT) AS
 $$
--- FIXME: implementation goes here
+SELECT
+    c.name,
+    count(film.film_id) AS "sum"
+FROM category c
+JOIN film_category fc ON c.category_id = fc.category_id
+JOIN film ON film.film_id = fc.film_id
+JOIN language lang ON film.language_id = lang.language_id
+WHERE lang.name = $1
+GROUP BY (c.name)
+ORDER BY (name);
 $$
 LANGUAGE SQL
 IMMUTABLE
